@@ -11,11 +11,11 @@
 import Client from "./Client";
 import Config from "./Config";
 import { ACTION } from "./Globals";
-import LocalPersistence from "./LocalPersistence";
 import PriceManager from "./PriceManager";
 import RemotePersistence from "./RemotePersistence";
 import Server from "./Server";
 import UIWindow from "./UIWindow";
+import SavePersistence from "./SavePersistence";
 
 registerPlugin({
     name: "price-manager",
@@ -33,7 +33,7 @@ registerPlugin({
                 () => ({}),
             );
 
-        const persistence = network.mode === "client" ? new RemotePersistence() : new LocalPersistence();
+        const persistence = network.mode === "client" ? new RemotePersistence() : new SavePersistence();
         const config = new Config(persistence);
 
         const priceManager = network.mode === "client" ? new Client(config) : new PriceManager(config);
